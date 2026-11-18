@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block titulo %}Boletim{% endblock %}
+{% block conteudo %}
+<div class="topo"><div><h1>Boletim escolar</h1><p class="sub">{{ aluno.nome }} · {{ aluno.email }}</p></div><button class="btn claro" onclick="window.print()">Imprimir</button></div>
+<div class="cartao">
+  <table>
+    <tr><th>Disciplina</th><th>Professor</th><th>1º</th><th>2º</th><th>3º</th><th>4º</th><th>Média</th></tr>
+    {% for l in linhas %}
+    <tr><td><b>{{ l.disciplina.nome }}</b><br><span class="sub">{{ l.disciplina.turma }}</span></td><td>{{ l.disciplina.professor or '—' }}</td>
+      {% for b in range(1, 5) %}<td>{{ '%.1f'|format(l.notas[b]) if b in l.notas else '—' }}</td>{% endfor %}
+      <td>{% if l.media is not none %}<span class="{{ 'nota-boa' if l.media >= 6 else 'nota-baixa' }}">{{ l.media }}</span>{% else %}—{% endif %}</td></tr>
+    {% else %}<tr><td colspan="7" class="vazio">Nenhuma disciplina encontrada.</td></tr>{% endfor %}
+  </table>
+</div>
+<p class="sub">Média para aprovação: 6,0</p>
+{% endblock %}

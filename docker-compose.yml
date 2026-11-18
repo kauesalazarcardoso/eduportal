@@ -1,0 +1,6 @@
+services:
+  eduportal:
+    build: .
+    container_name: eduportal
+    ports:
+      - "5002:5000"

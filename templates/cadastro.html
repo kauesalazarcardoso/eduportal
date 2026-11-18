@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Criar conta · EduPortal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login">
+  <div class="caixa-login">
+    <div class="marca">Edu<span>Portal</span></div>
+    <p class="sub">Crie sua conta de aluno</p>
+    {% for categoria, texto in get_flashed_messages(with_categories=true) %}
+      <div class="msg {{ categoria }}" style="margin-top:16px">{{ texto }}</div>
+    {% endfor %}
+    <form method="post">
+      <div class="campo"><label for="nome">Nome completo</label><input id="nome" name="nome" type="text" value="{{ nome or '' }}" required autofocus></div>
+      <div class="campo"><label for="email">E-mail</label><input id="email" name="email" type="email" value="{{ email or '' }}" required></div>
+      <div class="campo"><label for="senha">Senha</label><input id="senha" name="senha" type="password" minlength="6" required></div>
+      <div class="campo"><label for="confirmar">Confirmar senha</label><input id="confirmar" name="confirmar" type="password" minlength="6" required></div>
+      <button class="btn" type="submit">Criar conta</button>
+    </form>
+    <p class="dica">Já tem conta? <a href="{{ url_for('login') }}">Entrar</a></p>
+  </div>
+</body>
+</html>

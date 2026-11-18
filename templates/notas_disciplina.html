@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block titulo %}Notas · {{ disciplina.nome }}{% endblock %}
+{% block conteudo %}
+<div class="topo"><div><h1>{{ disciplina.nome }}</h1><p class="sub">{{ disciplina.turma }} · notas de 0 a 10</p></div><a class="btn claro" href="{{ url_for('notas') }}">← Disciplinas</a></div>
+<form class="cartao" method="post">
+  <table>
+    <tr><th>Aluno</th><th>1º bim</th><th>2º bim</th><th>3º bim</th><th>4º bim</th></tr>
+    {% for a in alunos %}
+    <tr><td>{{ a.nome }}</td>
+      {% for b in range(1, 5) %}<td><input class="nota" name="nota_{{ a.id }}_{{ b }}" value="{{ lancadas.get((a.id, b), '') }}"></td>{% endfor %}
+    </tr>
+    {% else %}<tr><td colspan="5" class="vazio">Nenhum aluno matriculado nesta turma.</td></tr>{% endfor %}
+  </table>
+  {% if alunos %}<div class="botoes"><button class="btn">Salvar notas</button></div>{% endif %}
+</form>
+{% endblock %}

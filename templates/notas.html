@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block titulo %}Lançar notas{% endblock %}
+{% block conteudo %}
+<div class="topo"><div><h1>Lançar notas</h1><p class="sub">Escolha a disciplina</p></div></div>
+<div class="cartao">
+  <table>
+    <tr><th>Disciplina</th><th>Turma</th>{% if session.perfil == 'admin' %}<th>Professor</th>{% endif %}<th></th></tr>
+    {% for d in disciplinas %}
+    <tr><td><b>{{ d.nome }}</b></td><td>{{ d.turma }}</td>{% if session.perfil == 'admin' %}<td>{{ d.professor or '—' }}</td>{% endif %}
+      <td class="acoes"><a class="btn mini" href="{{ url_for('notas_disciplina', did=d.id) }}">Abrir</a></td></tr>
+    {% else %}<tr><td colspan="4" class="vazio">Nenhuma disciplina.</td></tr>{% endfor %}
+  </table>
+</div>
+{% endblock %}

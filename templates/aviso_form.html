@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block titulo %}Novo aviso{% endblock %}
+{% block conteudo %}
+<div class="topo"><h1>Novo aviso</h1></div>
+<form class="cartao" method="post">
+  <div class="campos">
+    <div class="campo inteiro"><label>Título</label><input name="titulo" maxlength="120" required></div>
+    <div class="campo inteiro"><label>Conteúdo</label><textarea name="conteudo" rows="6" required></textarea></div>
+  </div>
+  <div class="botoes"><button class="btn">Publicar</button><a class="btn claro" href="{{ url_for('mural') }}">Cancelar</a></div>
+</form>
+{% endblock %}

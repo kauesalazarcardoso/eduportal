@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entrar · EduPortal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login">
+  <div class="caixa-login">
+    <div class="marca">Edu<span>Portal</span></div>
+    <p class="sub">Acesse com seu e-mail da escola</p>
+    {% for categoria, texto in get_flashed_messages(with_categories=true) %}
+      <div class="msg {{ categoria }}" style="margin-top:16px">{{ texto }}</div>
+    {% endfor %}
+    <form method="post">
+      <div class="campo"><label for="email">E-mail</label><input id="email" name="email" type="text" required autofocus></div>
+      <div class="campo"><label for="senha">Senha</label><input id="senha" name="senha" type="password" required></div>
+      <button class="btn" type="submit">Entrar</button>
+    </form>
+    <a class="btn claro" href="{{ url_for('cadastro') }}" style="display:block;box-sizing:border-box;text-align:center;margin-top:10px;text-decoration:none">Criar conta</a>
+    <p class="dica">Esqueceu a senha? Procure a secretaria da escola.</p>
+  </div>
+</body>
+</html>

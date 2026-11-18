@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}EduPortal{% endblock %} · EduPortal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  {% set ep = request.endpoint or '' %}
+  <aside class="lateral">
+    <div class="marca">Edu<span>Portal</span></div>
+    <nav>
+      <a href="{{ url_for('painel') }}" class="{{ 'ativo' if ep == 'painel' }}">Início</a>
+      <a href="{{ url_for('mural') }}" class="{{ 'ativo' if ep.startswith('aviso') or ep == 'mural' }}">Mural de avisos</a>
+      {% if session.perfil == 'aluno' %}
+        <a href="{{ url_for('boletim', aluno_id=session.usuario_id) }}" class="{{ 'ativo' if ep == 'boletim' }}">Meu boletim</a>
+      {% endif %}
+      {% if session.perfil in ('professor', 'admin') %}
+        <div class="grupo">Acadêmico</div>
+        <a href="{{ url_for('notas') }}" class="{{ 'ativo' if ep.startswith('notas') }}">Lançar notas</a>
+        <a href="{{ url_for('boletins') }}" class="{{ 'ativo' if ep in ('boletins', 'boletim') }}">Boletins</a>
+      {% endif %}
+      {% if session.perfil == 'admin' %}
+        <div class="grupo">Secretaria</div>
+        <a href="{{ url_for('usuarios') }}" class="{{ 'ativo' if ep.startswith('usuario') }}">Usuários</a>
+        <a href="{{ url_for('turmas') }}" class="{{ 'ativo' if ep.startswith('turma') }}">Turmas</a>
+        <a href="{{ url_for('disciplinas') }}" class="{{ 'ativo' if ep.startswith('disciplina') }}">Disciplinas</a>
+      {% endif %}
+    </nav>
+    <div class="usuario">
+      <strong>{{ session.nome }}</strong>
+      {{ PERFIS[session.perfil] }}<br>
+      <a href="{{ url_for('perfil') }}">Meu perfil</a> &nbsp;·&nbsp; <a href="{{ url_for('logout') }}">Sair</a>
+    </div>
+  </aside>
+  <main>
+    {% for categoria, texto in get_flashed_messages(with_categories=true) %}
+      <div class="msg {{ categoria }}">{{ texto }}</div>
+    {% endfor %}
+    {% block conteudo %}{% endblock %}
+  </main>
+</body>
+</html>

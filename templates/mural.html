@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block titulo %}Mural de avisos{% endblock %}
+{% block conteudo %}
+<div class="topo"><div><h1>Mural de avisos</h1><p class="sub">Recados da escola e dos professores</p></div>
+  {% if session.perfil in ('professor', 'admin') %}<a class="btn amarelo" href="{{ url_for('aviso_novo') }}">+ Novo aviso</a>{% endif %}</div>
+{% for a in avisos %}
+<div class="cartao aviso">
+  <h3><a href="{{ url_for('aviso', aid=a.id) }}">{{ a.titulo }}</a></h3>
+  <p class="meta">{{ a.autor }} · {{ a.criado_em[:16] }} · {{ a.total }} comentário(s)</p>
+  <p>{{ a.conteudo | formatar }}</p>
+</div>
+{% else %}<div class="cartao vazio">Nenhum aviso publicado.</div>{% endfor %}
+{% endblock %}

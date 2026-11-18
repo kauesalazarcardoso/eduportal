@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block titulo %}Usuários{% endblock %}
+{% block conteudo %}
+<div class="topo"><div><h1>Usuários</h1><p class="sub">{{ usuarios|length }} encontrado(s)</p></div><a class="btn" href="{{ url_for('usuario_form') }}">+ Novo usuário</a></div>
+<div class="cartao">
+  <form class="busca" method="get">
+    <input name="q" value="{{ busca }}" placeholder="Buscar por nome...">
+    <select name="perfil"><option value="">Todos os perfis</option>{% for k, v in PERFIS.items() %}<option value="{{ k }}" {{ 'selected' if perfil == k }}>{{ v }}</option>{% endfor %}</select>
+    <button class="btn claro">Buscar</button>
+  </form>
+  <table>
+    <tr><th>Nome</th><th>E-mail</th><th>Perfil</th><th></th></tr>
+    {% for u in usuarios %}
+    <tr>
+      <td>{{ u.nome }}</td><td>{{ u.email }}</td><td><span class="selo {{ u.perfil }}">{{ PERFIS[u.perfil] }}</span></td>
+      <td class="acoes">
+        {% if u.perfil == 'aluno' %}<a class="btn mini claro" href="{{ url_for('boletim', aluno_id=u.id) }}">Boletim</a>{% endif %}
+        <a class="btn mini claro" href="{{ url_for('usuario_form', uid=u.id) }}">Editar</a>
+        <form class="inline" method="post" action="{{ url_for('usuario_excluir', uid=u.id) }}" onsubmit="return confirm('Excluir este usuário?')"><button class="btn mini perigo">Excluir</button></form>
+      </td>
+    </tr>
+    {% else %}<tr><td colspan="4" class="vazio">Nenhum usuário encontrado.</td></tr>{% endfor %}
+  </table>
+</div>
+{% endblock %}

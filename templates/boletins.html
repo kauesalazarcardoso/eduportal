@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block titulo %}Boletins{% endblock %}
+{% block conteudo %}
+<div class="topo"><div><h1>Boletins</h1><p class="sub">Escolha um aluno</p></div></div>
+<div class="cartao">
+  <table>
+    <tr><th>Aluno</th><th>Turma(s)</th><th></th></tr>
+    {% for a in alunos %}
+    <tr><td>{{ a.nome }}</td><td>{{ a.turmas or '—' }}</td><td class="acoes"><a class="btn mini" href="{{ url_for('boletim', aluno_id=a.id) }}">Ver boletim</a></td></tr>
+    {% else %}<tr><td colspan="3" class="vazio">Nenhum aluno.</td></tr>{% endfor %}
+  </table>
+</div>
+{% endblock %}

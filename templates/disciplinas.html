@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block titulo %}Disciplinas{% endblock %}
+{% block conteudo %}
+<div class="topo"><div><h1>Disciplinas</h1><p class="sub">{{ disciplinas|length }} disciplina(s)</p></div><a class="btn" href="{{ url_for('disciplina_form') }}">+ Nova disciplina</a></div>
+<div class="cartao">
+  <table>
+    <tr><th>Disciplina</th><th>Turma</th><th>Professor</th><th>Carga</th><th></th></tr>
+    {% for d in disciplinas %}
+    <tr><td><b>{{ d.nome }}</b></td><td>{{ d.turma }}</td><td>{{ d.professor or '—' }}</td><td>{{ d.carga_horaria }}h</td>
+      <td class="acoes">
+        <a class="btn mini claro" href="{{ url_for('disciplina_form', did=d.id) }}">Editar</a>
+        <form class="inline" method="post" action="{{ url_for('disciplina_excluir', did=d.id) }}" onsubmit="return confirm('Excluir a disciplina e suas notas?')"><button class="btn mini perigo">Excluir</button></form>
+      </td></tr>
+    {% else %}<tr><td colspan="5" class="vazio">Nenhuma disciplina cadastrada.</td></tr>{% endfor %}
+  </table>
+</div>
+{% endblock %}
